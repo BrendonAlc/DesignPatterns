@@ -10,9 +10,13 @@ import br.com.loja.orcamento.Orcamento;
  * 
  * @implNote Padrão Strategy para separar impostos e não deixar a classe crescer sempre
  */
-public class ISS implements Imposto {
+public class ISS extends Imposto {
 
-	public BigDecimal calcular(Orcamento orcamento) {
+	public ISS(Imposto outro) {
+		super(outro);
+	}
+
+	public BigDecimal realizarCalculo(Orcamento orcamento) {
 		return orcamento.getValor().multiply(new BigDecimal("0.06"));
 	}
 }
