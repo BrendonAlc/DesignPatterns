@@ -9,7 +9,25 @@ import br.com.loja.orcamento.Orcamento;
  * @author brend
  * Interface para aplicar os parametros de calcular imposto
  */
-public interface Imposto {
+public abstract class Imposto {
+	
+	private Imposto outro;
 
-	BigDecimal calcular(Orcamento orcamento);
+	public Imposto(Imposto outro) {
+		this.outro = outro;
+	}
+
+	protected abstract BigDecimal realizarCalculo(Orcamento orcamento);
+	
+	public BigDecimal calcular(Orcamento orcamento) {
+		//verificando impostos a serem calculados, somando os valores
+		BigDecimal valorImposto = realizarCalculo(orcamento);
+		BigDecimal valorDoOutroImposto = BigDecimal.ZERO;
+		if (outro != null) {
+			valorDoOutroImposto = outro.realizarCalculo(orcamento);
+		}
+		return valorImposto.add(valorDoOutroImposto);
+	}
+
+
 }
