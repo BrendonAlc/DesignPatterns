@@ -2,6 +2,7 @@ package br.com.loja.orcamento;
 
 import java.util.Map;
 
+import br.com.loja.DomainException;
 import br.com.loja.http.HttpAdapter;
 
 public class RegistroDeOrcamento {
@@ -17,6 +18,10 @@ public class RegistroDeOrcamento {
 
 
 	public void registrar(Orcamento orcamento) {
+		if (!orcamento.isFinalizado()) {
+			throw new DomainException("Orcamento não finalizado!");
+		}
+		
 		//chamada HTTP para a API externa
 		//URL Connection
 		//HTTP CLient
